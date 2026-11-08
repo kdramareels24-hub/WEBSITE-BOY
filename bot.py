@@ -1,7 +1,14 @@
 import os
 import re
 import io
+import threading
+from flask import Flask
 import telebot
+
+# ... (Aapka baki pura code waisa hi rahega) ...
+
+# Keep-alive web server taaki Render ka Port Timeout pass ho jaye
+app = Flask(__name__)
 
 # YAHAN APNA TELEGRAM BOT TOKEN DAALO (BotFather se lekar)
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
@@ -524,6 +531,24 @@ def handle_text(message):
         parse_mode="Markdown"
     )
 
+@app.route('/')
+def home():
+    return "Bot is alive and running 24/7!"
+
+def run_web():
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
+
 if __name__ == "__main__":
-    print("Bot is running...")
-    bot.infinity_polling()
+    # 1. Flask server background thread me start hoga Render port scan pass karne ke liye
+    threading.Thread(target=run_web, daemon=True).start()
+
+    # 2. Purane webhooks aur conflict clear karo
+    try:
+        bot.remove_webhook()
+    except Exception:
+        pass
+
+    print("Bot is starting polling...")
+    # 3. Polling start karo
+    bot.infinity_polling(timeout=20, long_polling_timeout=20)
