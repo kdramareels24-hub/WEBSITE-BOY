@@ -5,11 +5,6 @@ import threading
 from flask import Flask
 import telebot
 
-# ... (Aapka baki pura code waisa hi rahega) ...
-
-# Keep-alive web server taaki Render ka Port Timeout pass ho jaye
-app = Flask(__name__)
-
 # YAHAN APNA TELEGRAM BOT TOKEN DAALO (BotFather se lekar)
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -19,14 +14,23 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{BUSINESS_NAME}} | Civil Engineering & Construction</title>
+  <title>{{BUSINESS_NAME}} | Civil Infrastructure & Construction</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     .modal-active { display: flex !important; }
+    /* Typing Cursor Effect */
+    .typing-cursor::after {
+      content: '|';
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
   </style>
 </head>
-<body class="bg-gray-50 text-slate-800 font-sans antialiased">
+<body class="bg-gray-50 text-slate-800 font-sans antialiased selection:bg-amber-500 selection:text-slate-950">
 
   <!-- TOP BAR -->
   <div class="bg-slate-950 text-gray-300 text-xs py-2 px-6 border-b border-slate-800 hidden sm:block">
@@ -44,7 +48,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   </div>
 
   <!-- NAVBAR -->
-  <header class="bg-slate-900 text-white sticky top-0 z-40 shadow-lg border-b border-slate-800">
+  <header class="bg-slate-900/90 backdrop-blur-md text-white sticky top-0 z-40 shadow-lg border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <a href="#" class="flex items-center space-x-3">
         <div class="w-10 h-10 rounded-lg bg-amber-500 flex items-center justify-center text-slate-950 font-black text-xl shadow">
@@ -73,24 +77,44 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="relative bg-slate-950 text-white py-32 px-6 overflow-hidden">
-    <div class="absolute inset-0 z-0">
-      <img src="https://images.unsplash.com/photo-1541888946425-d0fbb1861593?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover opacity-20">
-    </div>
-    <div class="relative z-10 max-w-4xl mx-auto text-center">
-      <span class="inline-block bg-amber-500/20 text-amber-400 border border-amber-500/30 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
-        Licensed Infrastructure & Civil Contracting Firm
-      </span>
-      <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight">
+  <!-- HERO SECTION WITH LIVE BACKGROUND VIDEO & ACTION OVERLAY -->
+  <section class="relative min-h-[90vh] flex items-center justify-center bg-slate-950 text-white overflow-hidden px-6">
+    <!-- Live Background Video -->
+    <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-35 z-0">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-construction-site-of-a-modern-building-41004-large.mp4" type="video/mp4">
+    </video>
+
+    <!-- Dark Gradient Tint for Sharp Contrast -->
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/60 to-slate-950 z-10"></div>
+
+    <div class="relative z-20 max-w-5xl mx-auto text-center py-20">
+      <!-- Live Action Status Badge -->
+      <div class="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-amber-400 mb-6 backdrop-blur-sm">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
+        <span>Live Civil Project Execution & Contracting</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight mb-6 leading-tight uppercase">
         {{BUSINESS_NAME}}
       </h1>
-      <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-        Specializing in commercial structures, residential complexes, deep foundation excavation, and turnkey industrial installations across the region.
+
+      <!-- Dynamic Live Action Sub-headline -->
+      <div class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-200 mb-6 min-h-[40px]">
+        <span class="text-amber-400">Delivering: </span>
+        <span id="dynamic-headline" class="typing-cursor text-white font-bold">Heavy Civil & Infrastructure Contracting</span>
+      </div>
+
+      <p class="text-sm md:text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+        Autonomous civil engineering firm delivering turnkey commercial hubs, residential real estate, foundational excavation, and pre-engineered steel buildings with full audit compliance.
       </p>
+
       <div class="flex flex-wrap justify-center gap-4">
-        <a href="#contact" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-8 py-3.5 rounded shadow-lg transition">Get Quotation</a>
-        <a href="#projects" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700 px-8 py-3.5 rounded font-semibold transition">Our Work</a>
+        <a href="#contact" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold px-8 py-4 rounded-lg shadow-xl hover:shadow-amber-500/20 transition transform hover:-translate-y-0.5">
+          <i class="fa-solid fa-calculator mr-2"></i> Instant Quote
+        </a>
+        <a href="#projects" class="bg-slate-900/80 hover:bg-slate-800 border border-slate-700 px-8 py-4 rounded-lg font-bold transition backdrop-blur-sm">
+          <i class="fa-solid fa-helmet-safety mr-2 text-amber-400"></i> Explore Portfolio
+        </a>
       </div>
     </div>
   </section>
@@ -261,7 +285,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <span class="text-amber-600 font-bold tracking-wider text-xs uppercase">Corporate Profile</span>
         <h2 class="text-3xl md:text-4xl font-black text-slate-900 mt-1 mb-6">{{BUSINESS_NAME}}</h2>
         <p class="text-gray-600 text-sm leading-relaxed mb-4">
-          Established in <strong>{{YEAR}}</strong>, <strong>{{BUSINESS_NAME}}</strong> has grown into an autonomous engineering and commercial contracting organization. We manage heavy-civil earthworks, commercial RCC construction, residential projects, and infrastructure contracting.
+          Established in <strong>{{YEAR}}</strong>, <strong>{{BUSINESS_NAME}}</strong> operates as an autonomous engineering and commercial contracting organization. We manage heavy-civil earthworks, commercial RCC construction, residential projects, and infrastructure contracting.
         </p>
         <p class="text-gray-600 text-sm leading-relaxed mb-6">
           Every project complies with municipal bylaws, national safety codes, and rigorous audit standards, maintaining complete alignment with regional tax, labor, and corporate guidelines.
@@ -432,7 +456,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- SCRIPT FOR MODALS -->
+  <!-- SCRIPT FOR MODALS & DYNAMIC ACTION TEXT -->
   <script>
     function openModal(id) {
       document.getElementById(id).classList.add('modal-active');
@@ -440,6 +464,43 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     function closeModal(id) {
       document.getElementById(id).classList.remove('modal-active');
     }
+
+    // Dynamic Live Action Rotating Headlines
+    const headlines = [
+      "Heavy Civil & Infrastructure Contracting",
+      "Turnkey Commercial & Retail Hubs",
+      "Multi-Tier RCC Residential Layouts",
+      "Industrial Sheds & High-Deck Warehousing"
+    ];
+    let hIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const targetElement = document.getElementById("dynamic-headline");
+
+    function typeEffect() {
+      const currentText = headlines[hIndex];
+      if (isDeleting) {
+        targetElement.innerText = currentText.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        targetElement.innerText = currentText.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let typingSpeed = isDeleting ? 40 : 80;
+
+      if (!isDeleting && charIndex === currentText.length) {
+        typingSpeed = 2200; // Hold text
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        hIndex = (hIndex + 1) % headlines.length;
+        typingSpeed = 400;
+      }
+
+      setTimeout(typeEffect, typingSpeed);
+    }
+    document.addEventListener("DOMContentLoaded", typeEffect);
   </script>
 </body>
 </html>
@@ -468,14 +529,14 @@ def parse_details(text):
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     welcome_text = (
-        "🏗️ *Construction Website Generator Bot*\n\n"
-        "Mujhe niche diye format me details bhejo, mai turant ready `index.html` file bana kar bhej dunga:\n\n"
+        "🏗️ *Construction Live-Action Website Generator*\n\n"
+        "Mujhe niche diye format me details bhejo, mai cinematic live video + animation wali ready `index.html` file bana dunga:\n\n"
         "`Name: Shree Balaji Construction`\n"
         "`Email: contact@example.com`\n"
         "`Phone: +91 9876543210`\n"
         "`Address: Shop 12, Main Market, Indore, MP 452001`\n"
         "`Year: 2019`\n\n"
-        "_(Copy karke bas apni details replace karo aur bhej do)_"
+        "_(Copy karke bas details replace karo aur bhej do)_"
     )
     bot.reply_to(message, welcome_text, parse_mode="Markdown")
 
@@ -483,7 +544,6 @@ def send_welcome(message):
 def handle_text(message):
     data = parse_details(message.text)
     
-    # Check if required fields exist
     if not all(k in data for k in ["name", "email", "phone", "address"]):
         bot.reply_to(
             message,
@@ -500,7 +560,7 @@ def handle_text(message):
 
     year = data.get("year", "2019")
     
-    # Generate HTML by replacing all placeholders safely
+    # Static string replacement without relying on runtime JS config
     html_output = HTML_TEMPLATE
     html_output = html_output.replace("{{BUSINESS_NAME}}", data["name"])
     html_output = html_output.replace("{{EMAIL}}", data["email"])
@@ -508,20 +568,17 @@ def handle_text(message):
     html_output = html_output.replace("{{ADDRESS}}", data["address"])
     html_output = html_output.replace("{{YEAR}}", year)
 
-    # Prepare file as in-memory document
-    file_bytes = io.BytesIO(html_output.encode("utf-8"))
-    file_bytes.name = "index.html"
-
     clean_filename = re.sub(r'[^a-zA-Z0-9]', '_', data["name"]).lower() + "_index.html"
+    file_bytes = io.BytesIO(html_output.encode("utf-8"))
     file_bytes.name = clean_filename
 
     caption = (
-        f"✅ *Website HTML Ready!*\n\n"
+        f"🎬 *Cinematic Live-Action Website Ready!*\n\n"
         f"🏢 *Entity:* {data['name']}\n"
         f"📧 *Email:* {data['email']}\n"
         f"📞 *Phone:* {data['phone']}\n"
         f"📍 *Address:* {data['address']}\n\n"
-        f"👉 Is file ko download karke Vercel par direct drop karo."
+        f"👉 Download karke Vercel par direct drop karo."
     )
 
     bot.send_document(
@@ -530,6 +587,9 @@ def handle_text(message):
         caption=caption,
         parse_mode="Markdown"
     )
+
+# Render keep-alive web server taaki Port scan timeout pass ho jaye
+app = Flask(__name__)
 
 @app.route('/')
 def home():
@@ -540,15 +600,15 @@ def run_web():
     app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
-    # 1. Flask server background thread me start hoga Render port scan pass karne ke liye
+    # 1. Flask background server
     threading.Thread(target=run_web, daemon=True).start()
 
-    # 2. Purane webhooks aur conflict clear karo
+    # 2. Clear old webhooks
     try:
         bot.remove_webhook()
     except Exception:
         pass
 
     print("Bot is starting polling...")
-    # 3. Polling start karo
+    # 3. Start polling
     bot.infinity_polling(timeout=20, long_polling_timeout=20)
