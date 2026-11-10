@@ -5,7 +5,6 @@ import threading
 from flask import Flask
 import telebot
 
-# YAHAN APNA TELEGRAM BOT TOKEN DAALO (BotFather se lekar)
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -14,12 +13,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{BUSINESS_NAME}} | Civil Infrastructure & Construction</title>
+  <title>{{BUSINESS_NAME}} | Corporate Enterprise & Multi-Industry Solutions</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     .modal-active { display: flex !important; }
-    /* Typing Cursor Effect */
     .typing-cursor::after {
       content: '|';
       animation: blink 1s infinite;
@@ -30,19 +28,19 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }
   </style>
 </head>
-<body class="bg-gray-50 text-slate-800 font-sans antialiased selection:bg-amber-500 selection:text-slate-950">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white">
 
   <!-- TOP BAR -->
-  <div class="bg-slate-950 text-gray-300 text-xs py-2 px-6 border-b border-slate-800 hidden sm:block">
+  <div class="bg-slate-950 text-slate-300 text-xs py-2 px-6 border-b border-slate-800 hidden sm:block">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-6">
-        <span><i class="fa-solid fa-phone text-amber-500 mr-2"></i>{{PHONE}}</span>
-        <span><i class="fa-solid fa-envelope text-amber-500 mr-2"></i>{{EMAIL}}</span>
+        <span><i class="fa-solid fa-phone text-blue-500 mr-2"></i>{{PHONE}}</span>
+        <span><i class="fa-solid fa-envelope text-blue-500 mr-2"></i>{{EMAIL}}</span>
       </div>
       <div class="flex items-center space-x-4">
-        <span><i class="fa-solid fa-clock text-amber-500 mr-2"></i>Mon - Sat: 9:00 AM - 7:00 PM</span>
+        <span><i class="fa-solid fa-clock text-blue-500 mr-2"></i>Mon - Sat: 9:00 AM - 6:30 PM</span>
         <span class="text-slate-600">|</span>
-        <button onclick="openModal('loginModal')" class="hover:text-amber-400 font-medium">Client Login</button>
+        <button onclick="openModal('loginModal')" class="hover:text-blue-400 font-medium">Enterprise Portal</button>
       </div>
     </div>
   </div>
@@ -51,267 +49,246 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <header class="bg-slate-900/90 backdrop-blur-md text-white sticky top-0 z-40 shadow-lg border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <a href="#" class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-lg bg-amber-500 flex items-center justify-center text-slate-950 font-black text-xl shadow">
-          <i class="fa-solid fa-building-wheat"></i>
+        <div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black text-xl shadow">
+          <i class="fa-solid fa-cubes-stacked"></i>
         </div>
         <span class="text-xl md:text-2xl font-bold tracking-tight text-white">{{BUSINESS_NAME}}</span>
       </a>
 
       <nav class="hidden lg:flex space-x-7 text-sm font-medium">
-        <a href="#services" class="hover:text-amber-400 transition">Services</a>
-        <a href="#machinery" class="hover:text-amber-400 transition">Machinery</a>
-        <a href="#projects" class="hover:text-amber-400 transition">Portfolio</a>
-        <a href="#about" class="hover:text-amber-400 transition">About Entity</a>
-        <a href="#compliance" class="hover:text-amber-400 transition">Compliance</a>
-        <a href="#contact" class="hover:text-amber-400 transition">Contact</a>
+        <a href="#divisions" class="hover:text-blue-400 transition">Operating Divisions</a>
+        <a href="#infrastructure" class="hover:text-blue-400 transition">Capabilities</a>
+        <a href="#portfolio" class="hover:text-blue-400 transition">Enterprise Portfolio</a>
+        <a href="#governance" class="hover:text-blue-400 transition">Corporate Profile</a>
+        <a href="#compliance" class="hover:text-blue-400 transition">Compliance</a>
+        <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
       </nav>
 
       <div class="flex items-center space-x-3">
         <button onclick="openModal('loginModal')" class="text-xs uppercase font-bold text-gray-300 hover:text-white px-3 py-2 border border-slate-700 rounded transition">
-          Sign In
+          Client Login
         </button>
-        <button onclick="openModal('registerModal')" class="text-xs uppercase font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded transition shadow">
-          Register
+        <button onclick="openModal('registerModal')" class="text-xs uppercase font-bold bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition shadow">
+          Partner Access
         </button>
       </div>
     </div>
   </header>
 
-  <!-- HERO SECTION WITH LIVE BACKGROUND VIDEO & ACTION OVERLAY -->
-  <section class="relative min-h-[90vh] flex items-center justify-center bg-slate-950 text-white overflow-hidden px-6">
-    <!-- Live Background Video -->
-    <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-35 z-0">
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-construction-site-of-a-modern-building-41004-large.mp4" type="video/mp4">
+  <!-- HERO SECTION WITH LIVE CORPORATE VIDEO -->
+  <section class="relative min-h-[88vh] flex items-center justify-center bg-slate-950 text-white overflow-hidden px-6">
+    <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-25 z-0">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-traffic-at-night-41546-large.mp4" type="video/mp4">
     </video>
 
-    <!-- Dark Gradient Tint for Sharp Contrast -->
-    <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/60 to-slate-950 z-10"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950 z-10"></div>
 
     <div class="relative z-20 max-w-5xl mx-auto text-center py-20">
-      <!-- Live Action Status Badge -->
-      <div class="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-amber-400 mb-6 backdrop-blur-sm">
-        <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
-        <span>Live Civil Project Execution & Contracting</span>
+      <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-blue-400 mb-6 backdrop-blur-sm">
+        <span class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-ping"></span>
+        <span>Registered Enterprise Group & Multi-Sector Operations</span>
       </div>
 
       <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight mb-6 leading-tight uppercase">
         {{BUSINESS_NAME}}
       </h1>
 
-      <!-- Dynamic Live Action Sub-headline -->
       <div class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-200 mb-6 min-h-[40px]">
-        <span class="text-amber-400">Delivering: </span>
-        <span id="dynamic-headline" class="typing-cursor text-white font-bold">Heavy Civil & Infrastructure Contracting</span>
+        <span class="text-blue-400">Integrated: </span>
+        <span id="dynamic-headline" class="typing-cursor text-white font-bold">Commercial Infrastructure & Engineering</span>
       </div>
 
       <p class="text-sm md:text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-        Autonomous civil engineering firm delivering turnkey commercial hubs, residential real estate, foundational excavation, and pre-engineered steel buildings with full audit compliance.
+        Diversified corporate entity managing multi-disciplinary ventures across commercial contracting, supply chain networks, industrial asset logistics, and institutional procurement solutions.
       </p>
 
       <div class="flex flex-wrap justify-center gap-4">
-        <a href="#contact" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold px-8 py-4 rounded-lg shadow-xl hover:shadow-amber-500/20 transition transform hover:-translate-y-0.5">
-          <i class="fa-solid fa-calculator mr-2"></i> Instant Quote
+        <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-8 py-4 rounded-lg shadow-xl hover:shadow-blue-500/20 transition transform hover:-translate-y-0.5">
+          <i class="fa-solid fa-briefcase mr-2"></i> Corporate Inquiries
         </a>
-        <a href="#projects" class="bg-slate-900/80 hover:bg-slate-800 border border-slate-700 px-8 py-4 rounded-lg font-bold transition backdrop-blur-sm">
-          <i class="fa-solid fa-helmet-safety mr-2 text-amber-400"></i> Explore Portfolio
+        <a href="#divisions" class="bg-slate-900/80 hover:bg-slate-800 border border-slate-700 px-8 py-4 rounded-lg font-bold transition backdrop-blur-sm">
+          <i class="fa-solid fa-network-wired mr-2 text-blue-400"></i> Explore Divisions
         </a>
       </div>
     </div>
   </section>
 
-  <!-- CREDENTIALS STRIP -->
-  <div class="bg-amber-500 py-4 px-6 text-slate-950 text-xs md:text-sm font-bold shadow-md">
+  <!-- CORPORATE HIGHLIGHT STRIP -->
+  <div class="bg-blue-600 py-4 px-6 text-white text-xs md:text-sm font-bold shadow-md">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-around text-center gap-4">
-      <span><i class="fa-solid fa-calendar-check mr-2"></i>Active Operations Since: <strong>{{YEAR}}</strong></span>
+      <span><i class="fa-solid fa-calendar-check mr-2"></i>Enterprise Incorporated: <strong>{{YEAR}}</strong></span>
       <span class="hidden md:inline">•</span>
-      <span><i class="fa-solid fa-shield-halved mr-2"></i>Registered Civil Contractor</span>
+      <span><i class="fa-solid fa-shield-halved mr-2"></i>Statutory & Corporate Compliant</span>
       <span class="hidden md:inline">•</span>
-      <span><i class="fa-solid fa-file-invoice mr-2"></i>Tax & Regulatory Compliant Entity</span>
+      <span><i class="fa-solid fa-file-contract mr-2"></i>Certified B2B Contracting Entity</span>
     </div>
   </div>
 
-  <!-- STATS COUNTER -->
+  <!-- STATS -->
   <section class="bg-white py-12 border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
       <div>
-        <div class="text-3xl md:text-4xl font-extrabold text-slate-900">120+</div>
-        <div class="text-xs uppercase font-semibold text-gray-500 mt-1">Completed Sites</div>
+        <div class="text-3xl md:text-4xl font-extrabold text-slate-900">180+</div>
+        <div class="text-xs uppercase font-semibold text-gray-500 mt-1">Enterprise Deliveries</div>
       </div>
       <div>
-        <div class="text-3xl md:text-4xl font-extrabold text-slate-900">45+</div>
-        <div class="text-xs uppercase font-semibold text-gray-500 mt-1">Heavy Machinery Units</div>
+        <div class="text-3xl md:text-4xl font-extrabold text-slate-900">4</div>
+        <div class="text-xs uppercase font-semibold text-gray-500 mt-1">Operational Divisions</div>
       </div>
       <div>
-        <div class="text-3xl md:text-4xl font-extrabold text-slate-900">300+</div>
-        <div class="text-xs uppercase font-semibold text-gray-500 mt-1">Certified Technicians</div>
+        <div class="text-3xl md:text-4xl font-extrabold text-slate-900">99.4%</div>
+        <div class="text-xs uppercase font-semibold text-gray-500 mt-1">Service SLA Compliance</div>
       </div>
       <div>
         <div class="text-3xl md:text-4xl font-extrabold text-slate-900">100%</div>
-        <div class="text-xs uppercase font-semibold text-gray-500 mt-1">Safety Compliant</div>
+        <div class="text-xs uppercase font-semibold text-gray-500 mt-1">Audit Alignment</div>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES SECTION -->
-  <section id="services" class="py-24 max-w-7xl mx-auto px-6">
+  <!-- OPERATING DIVISIONS (4 IN 1 CATEGORIES) -->
+  <section id="divisions" class="py-24 max-w-7xl mx-auto px-6">
     <div class="text-center mb-16">
-      <span class="text-amber-600 font-bold tracking-wider text-xs uppercase">What We Build</span>
-      <h2 class="text-3xl md:text-4xl font-black text-slate-900 mt-1">Core Construction Verticals</h2>
-      <div class="w-16 h-1 bg-amber-500 mx-auto mt-3 rounded"></div>
+      <span class="text-blue-600 font-bold tracking-wider text-xs uppercase">Core Divisions</span>
+      <h2 class="text-3xl md:text-4xl font-black text-slate-900 mt-1">Multi-Disciplinary Business Operations</h2>
+      <div class="w-16 h-1 bg-blue-600 mx-auto mt-3 rounded"></div>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="bg-white rounded-xl overflow-hidden border border-gray-200 shadow hover:shadow-lg transition">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop" class="h-52 w-full object-cover">
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-slate-900 mb-2">Residential Real Estate</h3>
-          <p class="text-gray-600 text-sm leading-relaxed mb-4">Complete turnkey construction of residential villas, multi-family housing complexes, and high-rise apartments.</p>
-          <span class="text-xs font-semibold text-amber-600 uppercase">RCC & Seismic Isolation</span>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- 1. Civil & Infrastructure -->
+      <div class="bg-white p-6 rounded-xl border border-gray-200 shadow hover:shadow-lg transition">
+        <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4">
+          <i class="fa-solid fa-building"></i>
         </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Civil & Construction</h3>
+        <p class="text-gray-600 text-xs leading-relaxed">Turnkey commercial construction, foundational engineering, and civil facility development.</p>
       </div>
 
-      <div class="bg-white rounded-xl overflow-hidden border border-gray-200 shadow hover:shadow-lg transition">
-        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop" class="h-52 w-full object-cover">
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-slate-900 mb-2">Commercial Hubs & Offices</h3>
-          <p class="text-gray-600 text-sm leading-relaxed mb-4">Corporate headquarters, retail shopping complexes, showrooms, and mixed-use civil developments.</p>
-          <span class="text-xs font-semibold text-amber-600 uppercase">Structural Steel & Curtain Walls</span>
+      <!-- 2. Logistics & Supply Chain -->
+      <div class="bg-white p-6 rounded-xl border border-gray-200 shadow hover:shadow-lg transition">
+        <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4">
+          <i class="fa-solid fa-truck-ramp-box"></i>
         </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Logistics & Supply Chain</h3>
+        <p class="text-gray-600 text-xs leading-relaxed">Fleet management, regional freight warehousing, distribution hubs, and last-mile logistics.</p>
       </div>
 
-      <div class="bg-white rounded-xl overflow-hidden border border-gray-200 shadow hover:shadow-lg transition">
-        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600&auto=format&fit=crop" class="h-52 w-full object-cover">
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-slate-900 mb-2">Industrial Warehouses</h3>
-          <p class="text-gray-600 text-sm leading-relaxed mb-4">Logistics parks, factory sheds, cold storage facilities, and high-strength industrial flooring systems.</p>
-          <span class="text-xs font-semibold text-amber-600 uppercase">PEB & Heavy Foundations</span>
+      <!-- 3. Enterprise Tech & Solutions -->
+      <div class="bg-white p-6 rounded-xl border border-gray-200 shadow hover:shadow-lg transition">
+        <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4">
+          <i class="fa-solid fa-microchip"></i>
         </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Enterprise Digital</h3>
+        <p class="text-gray-600 text-xs leading-relaxed">ERP architectures, automated communication channels, cloud integrations, and corporate workflows.</p>
+      </div>
+
+      <!-- 4. General B2B Procurement -->
+      <div class="bg-white p-6 rounded-xl border border-gray-200 shadow hover:shadow-lg transition">
+        <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4">
+          <i class="fa-solid fa-handshake"></i>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">B2B Trade & Sourcing</h3>
+        <p class="text-gray-600 text-xs leading-relaxed">Bulk raw material procurement, institutional wholesale supply, and corporate vendor contracting.</p>
       </div>
     </div>
   </section>
 
-  <!-- MACHINERY FLEET & CAPACITY -->
-  <section id="machinery" class="bg-slate-900 text-white py-20 px-6">
+  <!-- INFRASTRUCTURE CAPABILITIES -->
+  <section id="infrastructure" class="bg-slate-900 text-white py-20 px-6">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16">
-        <span class="text-amber-400 font-bold tracking-wider text-xs uppercase">Machinery & Logistics</span>
-        <h2 class="text-3xl md:text-4xl font-black mt-1">Our Heavy Fleet Capabilities</h2>
-        <div class="w-16 h-1 bg-amber-500 mx-auto mt-3 rounded"></div>
+        <span class="text-blue-400 font-bold tracking-wider text-xs uppercase">Operational Scope</span>
+        <h2 class="text-3xl md:text-4xl font-black mt-1">Enterprise Asset Infrastructure</h2>
+        <div class="w-16 h-1 bg-blue-500 mx-auto mt-3 rounded"></div>
       </div>
 
-      <div class="grid md:grid-cols-4 gap-6">
-        <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
-          <i class="fa-solid fa-truck-monster text-3xl text-amber-400 mb-4"></i>
-          <h4 class="font-bold text-lg mb-2">Excavation Fleet</h4>
-          <p class="text-xs text-gray-400">Tracked excavators, backhoes, and trenchers for bulk site leveling.</p>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-slate-800 p-8 rounded-xl border border-slate-700">
+          <i class="fa-solid fa-warehouse text-3xl text-blue-400 mb-4"></i>
+          <h4 class="font-bold text-lg mb-2">Centralized Facilities</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">Modern regional hubs designed for inventory management, equipment staging, and corporate operational dispatch.</p>
         </div>
-        <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
-          <i class="fa-solid fa-truck-droplet text-3xl text-amber-400 mb-4"></i>
-          <h4 class="font-bold text-lg mb-2">Concrete Mixers</h4>
-          <p class="text-xs text-gray-400">Transit mixers and mobile batching plants providing high-grade ready-mix concrete.</p>
+        <div class="bg-slate-800 p-8 rounded-xl border border-slate-700">
+          <i class="fa-solid fa-shield-virus text-3xl text-blue-400 mb-4"></i>
+          <h4 class="font-bold text-lg mb-2">Regulatory Auditing</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">Internal auditing teams maintaining compliance with state tax registrations, commercial bylaws, and occupational safety codes.</p>
         </div>
-        <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
-          <i class="fa-solid fa-arrow-up-from-ground-water text-3xl text-amber-400 mb-4"></i>
-          <h4 class="font-bold text-lg mb-2">Tower Cranes</h4>
-          <p class="text-xs text-gray-400">Self-erecting and fixed tower cranes for multi-story lifting operations.</p>
-        </div>
-        <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
-          <i class="fa-solid fa-compass-drafting text-3xl text-amber-400 mb-4"></i>
-          <h4 class="font-bold text-lg mb-2">Quality Labs</h4>
-          <p class="text-xs text-gray-400">On-site compaction, soil testing, and concrete cube crushing equipment.</p>
+        <div class="bg-slate-800 p-8 rounded-xl border border-slate-700">
+          <i class="fa-solid fa-chart-line text-3xl text-blue-400 mb-4"></i>
+          <h4 class="font-bold text-lg mb-2">Scale & Capital Capacity</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">Robust credit framework enabling execution of large institutional work orders without logistical bottlenecks.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- EXTENDED PORTFOLIO -->
-  <section id="projects" class="py-24 max-w-7xl mx-auto px-6">
+  <!-- UNIVERSAL PORTFOLIO -->
+  <section id="portfolio" class="py-24 max-w-7xl mx-auto px-6">
     <div class="text-center mb-16">
-      <span class="text-amber-600 font-bold tracking-wider text-xs uppercase">Track Record</span>
-      <h2 class="text-3xl md:text-4xl font-black text-slate-900 mt-1">Executed Engineering Projects</h2>
-      <div class="w-16 h-1 bg-amber-500 mx-auto mt-3 rounded"></div>
+      <span class="text-blue-600 font-bold tracking-wider text-xs uppercase">Key Executions</span>
+      <h2 class="text-3xl md:text-4xl font-black text-slate-900 mt-1">Integrated Corporate Portfolio</h2>
+      <div class="w-16 h-1 bg-blue-600 mx-auto mt-3 rounded"></div>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <div class="relative group rounded-xl overflow-hidden shadow">
-        <img src="https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?q=80&w=600&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-6">
-          <span class="text-amber-400 text-xs font-bold uppercase">Civil Infrastructure</span>
-          <h4 class="text-white font-bold text-lg">Deep Foundation Excavation</h4>
+          <span class="text-blue-400 text-xs font-bold uppercase">Commercial Project</span>
+          <h4 class="text-white font-bold text-lg">Corporate Headquarters Development</h4>
         </div>
       </div>
       <div class="relative group rounded-xl overflow-hidden shadow">
-        <img src="https://images.unsplash.com/photo-1541971875076-8f970d573be6?q=80&w=600&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=600&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-6">
-          <span class="text-amber-400 text-xs font-bold uppercase">Commercial Complex</span>
-          <h4 class="text-white font-bold text-lg">Multi-Tier Steel Framework</h4>
+          <span class="text-blue-400 text-xs font-bold uppercase">Supply Chain Hub</span>
+          <h4 class="text-white font-bold text-lg">Automated Logistics Facility</h4>
         </div>
       </div>
       <div class="relative group rounded-xl overflow-hidden shadow">
-        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=600&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-6">
-          <span class="text-amber-400 text-xs font-bold uppercase">Site Supervision</span>
-          <h4 class="text-white font-bold text-lg">Architectural Quality Control</h4>
-        </div>
-      </div>
-      <div class="relative group rounded-xl overflow-hidden shadow">
-        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=600&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-6">
-          <span class="text-amber-400 text-xs font-bold uppercase">Commercial Hub</span>
-          <h4 class="text-white font-bold text-lg">Corporate Interior Redesign</h4>
-        </div>
-      </div>
-      <div class="relative group rounded-xl overflow-hidden shadow">
-        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=600&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-6">
-          <span class="text-amber-400 text-xs font-bold uppercase">Industrial Facility</span>
-          <h4 class="text-white font-bold text-lg">Heavy Structural Decking</h4>
-        </div>
-      </div>
-      <div class="relative group rounded-xl overflow-hidden shadow">
-        <img src="https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=600&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-6">
-          <span class="text-amber-400 text-xs font-bold uppercase">Urban Logistics</span>
-          <h4 class="text-white font-bold text-lg">Automated Warehouse Shed</h4>
+          <span class="text-blue-400 text-xs font-bold uppercase">Digital Architecture</span>
+          <h4 class="text-white font-bold text-lg">Enterprise Cloud Infrastructure</h4>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT & CORPORATE PROFILE -->
-  <section id="about" class="bg-gray-100 py-24 px-6 border-y border-gray-200">
+  <!-- GOVERNANCE & BUSINESS DATA -->
+  <section id="governance" class="bg-gray-100 py-24 px-6 border-y border-gray-200">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
       <div>
-        <span class="text-amber-600 font-bold tracking-wider text-xs uppercase">Corporate Profile</span>
+        <span class="text-blue-600 font-bold tracking-wider text-xs uppercase">Corporate Governance</span>
         <h2 class="text-3xl md:text-4xl font-black text-slate-900 mt-1 mb-6">{{BUSINESS_NAME}}</h2>
         <p class="text-gray-600 text-sm leading-relaxed mb-4">
-          Established in <strong>{{YEAR}}</strong>, <strong>{{BUSINESS_NAME}}</strong> operates as an autonomous engineering and commercial contracting organization. We manage heavy-civil earthworks, commercial RCC construction, residential projects, and infrastructure contracting.
+          Established in <strong>{{YEAR}}</strong>, <strong>{{BUSINESS_NAME}}</strong> functions as an integrated commercial establishment managing diversified industrial and corporate operations. 
         </p>
         <p class="text-gray-600 text-sm leading-relaxed mb-6">
-          Every project complies with municipal bylaws, national safety codes, and rigorous audit standards, maintaining complete alignment with regional tax, labor, and corporate guidelines.
+          Our centralized management framework ensures all regional undertakings adhere strictly to statutory tax compliance, municipal standards, and transparent client engagement protocols.
         </p>
       </div>
 
       <!-- AUDIT CARD -->
       <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-md">
         <h3 class="text-lg font-bold text-slate-900 mb-6 pb-2 border-b border-gray-200 flex items-center">
-          <i class="fa-solid fa-building-circle-check text-amber-500 mr-2.5"></i> Verification & Business Data
+          <i class="fa-solid fa-certificate text-blue-600 mr-2.5"></i> Legal Entity Verification Data
         </h3>
         <div class="space-y-4 text-sm">
           <div>
-            <span class="text-xs uppercase font-bold text-gray-400 block">Legal Entity Name</span>
+            <span class="text-xs uppercase font-bold text-gray-400 block">Registered Entity Name</span>
             <span class="font-bold text-slate-900">{{BUSINESS_NAME}}</span>
           </div>
           <div>
-            <span class="text-xs uppercase font-bold text-gray-400 block">Official Business Email</span>
-            <a href="mailto:{{EMAIL}}" class="font-medium text-amber-600 hover:underline">{{EMAIL}}</a>
+            <span class="text-xs uppercase font-bold text-gray-400 block">Corporate Communications</span>
+            <a href="mailto:{{EMAIL}}" class="font-medium text-blue-600 hover:underline">{{EMAIL}}</a>
           </div>
           <div>
-            <span class="text-xs uppercase font-bold text-gray-400 block">Verified Business Line</span>
+            <span class="text-xs uppercase font-bold text-gray-400 block">Verified Commercial Desk</span>
             <a href="tel:{{PHONE}}" class="font-medium text-slate-800 hover:underline">{{PHONE}}</a>
           </div>
           <div>
-            <span class="text-xs uppercase font-bold text-gray-400 block">Registered Corporate Office</span>
+            <span class="text-xs uppercase font-bold text-gray-400 block">Registered Operational Office</span>
             <span class="text-gray-700 leading-relaxed">{{ADDRESS}}</span>
           </div>
         </div>
@@ -319,56 +296,56 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
   </section>
 
-  <!-- LEGAL & PRIVACY POLICY -->
+  <!-- COMPLIANCE & PRIVACY -->
   <section id="compliance" class="py-16 px-6 max-w-5xl mx-auto">
     <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-sm text-xs text-gray-500 space-y-4">
-      <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide">Privacy Notice & Business Terms</h3>
+      <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide">Enterprise Privacy & Operational Bylaws</h3>
       <p>
-        This portal is operated by <strong>{{BUSINESS_NAME}}</strong>. All communications, inquiries, phone calls, and technical project scopes received through this site are utilized strictly for estimating projects, executing civil construction contracts, and maintaining official corporate records.
+        This portal is operated by <strong>{{BUSINESS_NAME}}</strong>. All communications, inquiries, transactions, and corporate correspondence submitted through this domain are strictly processed for commercial contract fulfillment, vendor onboarding, and corporate auditing.
       </p>
       <p>
-        For regulatory inspections, formal vendor audits, or GST documentation verification, contact our administrative department at <strong>{{EMAIL}}</strong> or visit our office at <strong>{{ADDRESS}}</strong>.
+        For official audits, tax compliance invoices, or corporate inquiries, write directly to <strong>{{EMAIL}}</strong> or visit our registered facilities at <strong>{{ADDRESS}}</strong>.
       </p>
     </div>
   </section>
 
-  <!-- CONTACT SECTION -->
+  <!-- CONTACT -->
   <section id="contact" class="bg-slate-900 text-white py-24 px-6">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
       <div>
-        <span class="text-amber-400 font-bold uppercase tracking-wider text-xs">Direct Channel</span>
-        <h2 class="text-3xl md:text-4xl font-black mb-6">Contact Registered Office</h2>
+        <span class="text-blue-400 font-bold uppercase tracking-wider text-xs">Direct Desk</span>
+        <h2 class="text-3xl md:text-4xl font-black mb-6">Contact Corporate Office</h2>
         <p class="text-gray-400 text-sm mb-8">
-          Reach out for tender inquiries, BOQ estimations, structural consults, or formal corporate contracts.
+          Inquiries regarding enterprise procurement, multi-divisional contracts, or regulatory verification.
         </p>
 
         <div class="space-y-6 text-sm">
           <div class="flex items-start space-x-4">
-            <div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center text-amber-400 flex-shrink-0 mt-1">
+            <div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center text-blue-400 flex-shrink-0 mt-1">
               <i class="fa-solid fa-location-dot"></i>
             </div>
             <div>
-              <span class="block text-gray-400 text-xs font-semibold uppercase">Physical Office</span>
+              <span class="block text-gray-400 text-xs font-semibold uppercase">Office Address</span>
               <span class="text-gray-200 font-medium leading-relaxed">{{ADDRESS}}</span>
             </div>
           </div>
 
           <div class="flex items-start space-x-4">
-            <div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center text-amber-400 flex-shrink-0 mt-1">
+            <div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center text-blue-400 flex-shrink-0 mt-1">
               <i class="fa-solid fa-envelope"></i>
             </div>
             <div>
               <span class="block text-gray-400 text-xs font-semibold uppercase">Official Email</span>
-              <a href="mailto:{{EMAIL}}" class="text-amber-400 hover:underline">{{EMAIL}}</a>
+              <a href="mailto:{{EMAIL}}" class="text-blue-400 hover:underline">{{EMAIL}}</a>
             </div>
           </div>
 
           <div class="flex items-start space-x-4">
-            <div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center text-amber-400 flex-shrink-0 mt-1">
+            <div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center text-blue-400 flex-shrink-0 mt-1">
               <i class="fa-solid fa-phone"></i>
             </div>
             <div>
-              <span class="block text-gray-400 text-xs font-semibold uppercase">Telephone Line</span>
+              <span class="block text-gray-400 text-xs font-semibold uppercase">Direct Telephone</span>
               <a href="tel:{{PHONE}}" class="text-gray-200 hover:underline">{{PHONE}}</a>
             </div>
           </div>
@@ -376,21 +353,26 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       </div>
 
       <div class="bg-slate-800 p-8 rounded-xl border border-slate-700 shadow-xl">
-        <h3 class="text-xl font-bold mb-4">Request Project Quote</h3>
-        <form onsubmit="event.preventDefault(); alert('Inquiry recorded. Contracting team will revert within 24 hours.');" class="space-y-4 text-sm">
+        <h3 class="text-xl font-bold mb-4">General Enterprise Inquiry</h3>
+        <form onsubmit="event.preventDefault(); alert('Inquiry recorded. Representative will respond within 24 hours.');" class="space-y-4 text-sm">
           <div>
-            <label class="block text-gray-300 mb-1 text-xs">Full Name / Entity Name</label>
-            <input type="text" required class="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2.5 text-white focus:outline-none focus:border-amber-400">
+            <label class="block text-gray-300 mb-1 text-xs">Entity / Client Name</label>
+            <input type="text" required class="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2.5 text-white focus:outline-none focus:border-blue-400">
           </div>
           <div>
-            <label class="block text-gray-300 mb-1 text-xs">Phone Number</label>
-            <input type="tel" required class="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2.5 text-white focus:outline-none focus:border-amber-400">
+            <label class="block text-gray-300 mb-1 text-xs">Contact Number</label>
+            <input type="tel" required class="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2.5 text-white focus:outline-none focus:border-blue-400">
           </div>
           <div>
-            <label class="block text-gray-300 mb-1 text-xs">Project Scope</label>
-            <textarea rows="3" required class="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2.5 text-white focus:outline-none focus:border-amber-400"></textarea>
+            <label class="block text-gray-300 mb-1 text-xs">Operating Division</label>
+            <select class="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2.5 text-white focus:outline-none focus:border-blue-400">
+              <option>Civil Infrastructure & Engineering</option>
+              <option>Supply Chain & Logistics</option>
+              <option>Enterprise Digital Solutions</option>
+              <option>General Wholesale & B2B Trade</option>
+            </select>
           </div>
-          <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded transition shadow">Send Inquiry</button>
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded transition shadow">Submit Commercial Request</button>
         </form>
       </div>
     </div>
@@ -402,75 +384,68 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       <p>© 2026 {{BUSINESS_NAME}}. All Rights Reserved.</p>
       <div class="flex space-x-6 text-gray-400">
         <a href="#compliance" class="hover:underline">Privacy Policy</a>
-        <a href="#compliance" class="hover:underline">Terms & Conditions</a>
-        <a href="#contact" class="hover:underline">Contact Office</a>
+        <a href="#compliance" class="hover:underline">Terms of Service</a>
+        <a href="#contact" class="hover:underline">Governance Desk</a>
       </div>
     </div>
   </footer>
 
-  <!-- LOGIN MODAL -->
+  <!-- MODALS -->
   <div id="loginModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 w-full max-w-md p-6 rounded-xl shadow-2xl relative text-white">
       <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      <h3 class="text-xl font-bold mb-1">Client Portal Login</h3>
-      <p class="text-xs text-gray-400 mb-6">Access your project BOQ, blueprints, and milestone status</p>
-      <form onsubmit="event.preventDefault(); alert('Authentication portal active. Access restricted to registered site clients.');" class="space-y-4 text-sm">
+      <h3 class="text-xl font-bold mb-1">Enterprise Client Login</h3>
+      <p class="text-xs text-gray-400 mb-6">Access your procurement contracts, invoices, and service milestones</p>
+      <form onsubmit="event.preventDefault(); alert('Authentication portal active. Access restricted to registered clients.');" class="space-y-4 text-sm">
         <div>
-          <label class="block text-gray-400 text-xs mb-1">Registered Email</label>
-          <input type="email" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-amber-500">
+          <label class="block text-gray-400 text-xs mb-1">Corporate Email</label>
+          <input type="email" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500">
         </div>
         <div>
           <label class="block text-gray-400 text-xs mb-1">Password</label>
-          <input type="password" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-amber-500">
+          <input type="password" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500">
         </div>
-        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2.5 rounded transition">Sign In</button>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded transition">Authenticate</button>
       </form>
     </div>
   </div>
 
-  <!-- REGISTER MODAL -->
   <div id="registerModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 w-full max-w-md p-6 rounded-xl shadow-2xl relative text-white">
       <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      <h3 class="text-xl font-bold mb-1">New Client Registration</h3>
-      <p class="text-xs text-gray-400 mb-6">Register your company details to receive official project estimates</p>
-      <form onsubmit="event.preventDefault(); alert('Registration recorded. Profile activation will be dispatched to your email.');" class="space-y-4 text-sm">
+      <h3 class="text-xl font-bold mb-1">Partner Onboarding</h3>
+      <p class="text-xs text-gray-400 mb-6">Register your company to initiate B2B trade partnerships</p>
+      <form onsubmit="event.preventDefault(); alert('Registration recorded. Profile activation will be dispatched to your corporate email.');" class="space-y-4 text-sm">
         <div>
-          <label class="block text-gray-400 text-xs mb-1">Client / Company Name</label>
-          <input type="text" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-amber-500">
+          <label class="block text-gray-400 text-xs mb-1">Legal Company Name</label>
+          <input type="text" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500">
         </div>
         <div>
           <label class="block text-gray-400 text-xs mb-1">Official Email</label>
-          <input type="email" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-amber-500">
+          <input type="email" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500">
         </div>
         <div>
-          <label class="block text-gray-400 text-xs mb-1">Set Password</label>
-          <input type="password" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-amber-500">
+          <label class="block text-gray-400 text-xs mb-1">Create Password</label>
+          <input type="password" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500">
         </div>
-        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2.5 rounded transition">Register Account</button>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded transition">Register Enterprise Account</button>
       </form>
     </div>
   </div>
 
-  <!-- SCRIPT FOR MODALS & DYNAMIC ACTION TEXT -->
   <script>
-    function openModal(id) {
-      document.getElementById(id).classList.add('modal-active');
-    }
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('modal-active');
-    }
+    function openModal(id) { document.getElementById(id).classList.add('modal-active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('modal-active'); }
 
-    // Dynamic Live Action Rotating Headlines
     const headlines = [
-      "Heavy Civil & Infrastructure Contracting",
-      "Turnkey Commercial & Retail Hubs",
-      "Multi-Tier RCC Residential Layouts",
-      "Industrial Sheds & High-Deck Warehousing"
+      "Commercial Infrastructure & Engineering",
+      "Integrated Supply Chain & Regional Logistics",
+      "Enterprise Digital Systems & Automation",
+      "Institutional Wholesale & Procurement Solutions"
     ];
     let hIndex = 0;
     let charIndex = 0;
@@ -490,7 +465,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       let typingSpeed = isDeleting ? 40 : 80;
 
       if (!isDeleting && charIndex === currentText.length) {
-        typingSpeed = 2200; // Hold text
+        typingSpeed = 2200;
         isDeleting = true;
       } else if (isDeleting && charIndex === 0) {
         isDeleting = false;
@@ -529,14 +504,14 @@ def parse_details(text):
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     welcome_text = (
-        "🏗️ *Construction Live-Action Website Generator*\n\n"
-        "Mujhe niche diye format me details bhejo, mai cinematic live video + animation wali ready `index.html` file bana dunga:\n\n"
-        "`Name: Shree Balaji Construction`\n"
-        "`Email: contact@example.com`\n"
+        "🏢 *Multi-Sector Corporate Enterprise Website Generator*\n\n"
+        "Ye bot ek Universal Corporate Conglomerate website generate karega jo kisi bhi business category (Trading, Tech, Construction, Logistics) ke Meta Verification ko approve karwa sakti hai.\n\n"
+        "Format me details bhejo:\n"
+        "`Name: Apex Global Enterprises`\n"
+        "`Email: contact@heoo.in`\n"
         "`Phone: +91 9876543210`\n"
-        "`Address: Shop 12, Main Market, Indore, MP 452001`\n"
-        "`Year: 2019`\n\n"
-        "_(Copy karke bas details replace karo aur bhej do)_"
+        "`Address: Office 401, Business Center, Sector 18, Noida 201301`\n"
+        "`Year: 2018`\n"
     )
     bot.reply_to(message, welcome_text, parse_mode="Markdown")
 
@@ -547,20 +522,18 @@ def handle_text(message):
     if not all(k in data for k in ["name", "email", "phone", "address"]):
         bot.reply_to(
             message,
-            "⚠️ *Kripya sahi format me bhejein!*\n\n"
-            "Format:\n"
-            "`Name: Company Name`\n"
-            "`Email: your@email.com`\n"
+            "⚠️ *Format check karein:*\n"
+            "`Name: Entity Name`\n"
+            "`Email: contact@heoo.in`\n"
             "`Phone: +919876543210`\n"
-            "`Address: Full Address Here`\n"
-            "`Year: 2020` *(Optional)*",
+            "`Address: Registered Address`\n"
+            "`Year: 2019` *(Optional)*",
             parse_mode="Markdown"
         )
         return
 
     year = data.get("year", "2019")
     
-    # Static string replacement without relying on runtime JS config
     html_output = HTML_TEMPLATE
     html_output = html_output.replace("{{BUSINESS_NAME}}", data["name"])
     html_output = html_output.replace("{{EMAIL}}", data["email"])
@@ -573,12 +546,12 @@ def handle_text(message):
     file_bytes.name = clean_filename
 
     caption = (
-        f"🎬 *Cinematic Live-Action Website Ready!*\n\n"
+        f"🌐 *Universal Enterprise HTML Ready!*\n\n"
         f"🏢 *Entity:* {data['name']}\n"
         f"📧 *Email:* {data['email']}\n"
         f"📞 *Phone:* {data['phone']}\n"
         f"📍 *Address:* {data['address']}\n\n"
-        f"👉 Download karke Vercel par direct drop karo."
+        f"👉 Download karke Vercel par direct drop karein."
     )
 
     bot.send_document(
@@ -588,27 +561,21 @@ def handle_text(message):
         parse_mode="Markdown"
     )
 
-# Render keep-alive web server taaki Port scan timeout pass ho jaye
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Bot is alive and running 24/7!"
+    return "Universal Enterprise Bot is running 24/7!"
 
 def run_web():
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
-    # 1. Flask background server
     threading.Thread(target=run_web, daemon=True).start()
-
-    # 2. Clear old webhooks
     try:
         bot.remove_webhook()
     except Exception:
         pass
-
     print("Bot is starting polling...")
-    # 3. Start polling
     bot.infinity_polling(timeout=20, long_polling_timeout=20)
